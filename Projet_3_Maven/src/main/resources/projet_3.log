@@ -1,0 +1,6 @@
+
+2019-04-04 17:03:36 INFO  Main:22 - Ceci est un message d'info
+2019-04-04 17:03:36 DEBUG Main:23 - Ceci est un message de debug
+2019-04-04 17:04:29 INFO  Main:22 - Ceci est un message d'info
+2019-04-04 17:04:29 DEBUG Main:23 - Ceci est un message de debug
+2019-04-04 17:04:37 DEBUG Personne:84 - Proposition : 12345678 -> Réponse : =-=++---
