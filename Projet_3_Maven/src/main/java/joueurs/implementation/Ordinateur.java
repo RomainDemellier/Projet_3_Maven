@@ -18,113 +18,124 @@ public class Ordinateur extends Joueur {
 	private String proposition = "";
 	private String solution = "";
 	private int nbreChiffre;
-	private int nombreBienPlace;
-	private int nombreEstPresent;
-	private String listePresent;
-	private String listeNonPresent;
-	private String listePresentBis;
 	private ArrayList<String> listeCombinaisons = new ArrayList<String>();
 	private Logger logger = LogManager.getLogger(Ordinateur.class);
 	
+	/**
+	 * Constructeur de la classe Ordinateur.
+	 * Va être appelé dans le jeu Recherche+-.
+	 * @param n le nombre de cases de la combinaison
+	 * @param combi la combinaison secrète que l'ordi doit trouver
+	 */
 	public Ordinateur(int n, String combi) {
 		this.n = n;
 		this.combinaison = combi;
 		for(int i = 0;i < n;i++) {
+			//Pour le jeu recherche+- la proposition initiale ne sera composée
+			//qu'avec des 5
 			this.proposition += '5';
 		}
 	}
 	
-	public Ordinateur(int n, String combi, String propo, int nbreChiffre) {
-		this.n = n;
-		this.combinaison = combi;
-		this.proposition = propo;
-		this.nbreChiffre = nbreChiffre;
-		this.nombreBienPlace = -1;
-		this.nombreEstPresent = -1;
-		this.listePresent = "";
-		this.listeNonPresent = "";
-		this.listePresentBis = "";
-	}
-	
+	/**
+	 * Constructeur de la classe Ordinateur
+	 * Va être appelé dans le jeu mastermind
+	 * @param n nombre de cases
+	 * @param combi la combinaison secrète que l'ordi doit trouver
+	 * @param nbreChiffre nombre de chiffres utilisables pour le mastermind
+	 * @param listeC liste contenant toutes les combinaisons possibles en fonction
+	 * 				 du nombre de cases et du nombre de chiffres utilisables
+	 */
 	public Ordinateur(int n, String combi, int nbreChiffre, ArrayList<String> listeC) {
 		this.n = n;
 		this.combinaison = combi;
-		//this.proposition = propo;
 		this.nbreChiffre = nbreChiffre;
 		this.listeCombinaisons = listeC;
-		/*this.nombreBienPlace = -1;
-		this.nombreEstPresent = -1;
-		this.listePresent = "";
-		this.listeNonPresent = "";
-		this.listePresentBis = "";*/
 	}
 	
+	/**
+	 * Méthode de la classe Ordinateur appelé dans la classe RecherchePlusMoins
+	 * @param modeD booléen qui indique si on est en mode développeur ou non
+	 * @return un booléen : true si l'ordinateur a trouvé la combinaison secrète
+	 * 						false sinon
+	 */
 	public Boolean jouerPlusMoins(Boolean modeD) {
 		int n = this.n;
 		String combi = this.combinaison;
-		Boolean gagne = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
 		this.afficheCombinaison(combi, modeD);
 		
-		if(resultat.equals("")) {
-			if(proposition.equals(combi)) {
-				resultat = comparaison(proposition);
-				System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat);
-				logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat);
-				jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
-				gagne = true;
-			}else {
-				resultat = comparaison(this.proposition);
-				System.out.println("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat + "\n");
-				logger.info("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat + "\n");
-				genereProposition(resultat);
-			}
+		if(proposition.equals(combi)) {
+			//Si la proposition est égale à la combinaison secrète une boîte de dialogue
+			//apparaît indiquant que l'ordinateur a trouvé la combinaison et gagne prend la valeur true
+			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
+			logger.info("L'ordinateur a trouvé la combinaison.");
+			return true;
 		} else {
-			if(proposition.equals(combi)) {
-				resultat = comparaison(this.proposition);
-				System.out.println("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat);
-				logger.info("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat);
-				jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
-				gagne = true;
-			} else {
-				resultat = comparaison(this.proposition);
-				System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
-				logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
-				genereProposition(resultat);
-			}
+			//Sinon la méthode comparaison retourne un résultat qui indique case par case
+			//si la valeur de la combinaison secrète à l' indice j est égale, inférieure ou supérieure
+			//à la valeur de la proposition faite par l'ordinateur à l'indice j 
+			resultat = comparaison(this.proposition);
+			//On affiche le résultat dans la console
+			System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
+			logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
+			//On génère une nouvelle proposition découlant de la proposition précédente
+			//et du resultat de la méthode comparaison
+			genereProposition(resultat);
 		}
-		return gagne;
+		return false;
 	}
 	
-	
+	/**
+	 * Méthode de la classe Ordinateur appelé dans la classe Mastermind
+	 * @param modeD booléen qui indique si on est en mode développeur ou non
+	 * @return un booléen : true si l'ordinateur a trouvé la combinaison secrète
+	 * 						false sinon
+	 */
 	public Boolean jouerMastermind(Boolean modeD) {
 		Boolean gagne = false;
 		JOptionPane jop = new JOptionPane();
 		String resultat = "";
 		this.afficheCombinaison(combinaison,modeD);
 		int nombreCombinaisons = this.listeCombinaisons.size();
+		//choixCombinaison est un entier pris au hasard compris entre 0 et nombreCombinaisons - 1
 		int choixCombinaison = (int)(Math.random() * nombreCombinaisons);
+		//On choisit la combinaison à l'indice choixCombinaison dans listeCombinaisons
 		String combinaisonChoisi = this.listeCombinaisons.get(choixCombinaison);
 		
 		System.out.println("Combinaison choisi : " + combinaisonChoisi);
 		
 		if(combinaisonChoisi.equals(this.combinaison)) {
+			//Si la combinaison choisie est égale à la combinaison secrète
+			//une boîte de dialogue apparaît indiquant que l'ordinateur a trouvé la combinaison
 			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 			logger.info("L'ordinateur a trouvé la combinaison.");
 			return true;
 		} else {
 			
+			//Sinon on va stocker dans le tableau d'entiers tabResultat le nombre de
+			//chiffres bien placés ainsi que le nombre de chiffres présents de la 
+			//combinaison choisie par rapport à la combinaison secrète
 			int[] tabResultat = new int[2];
 			tabResultat = this.bienPlace(combinaison, combinaisonChoisi);
+			//On affecte nbreBienPlace le nombre de bien placés
 			int nbreBienPlace = tabResultat[0];
+			//On affecte à nbrePresent le nombre de présents
 			int nbrePresent = tabResultat[1];
 			resultat = this.resultatMastermind(nbreBienPlace, nbrePresent);
+			//On affiche le résultat (nombre de bien placés, nombre de présents)
 			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
 			logger.info("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
 			
 			ListIterator li = this.listeCombinaisons.listIterator();
 			while(li.hasNext()) {
+				//On parcourt la liste listeCombinaisons avec un iterator
+				//On sait que la combinaison choisie a nbreBienPlace de bien placés et nbrePresent de présents
+				//par rapport à la combinaison secrète.
+				//Mais l'inverse est aussi vrai.
+				//On peut donc éliminer toutes les combinaisons de listeCombinaisons qui n'ont pas exactement
+				//nbreBienPlace de bien placés et nbrePresent de présents par rapport à la combinaison choisie
 				String str = (String)li.next();
 				int[] tabResultat2 = new int[2];
 				tabResultat2 = this.bienPlace(combinaisonChoisi,str);
@@ -138,88 +149,43 @@ public class Ordinateur extends Joueur {
 		}
 	}
 	
+	/**
+	 * Méthode qui affiche dans la console la combinaison secrète que l'ordi doit trouver
+	 * @param str la combinaison à afficher
+	 * @param modeD 
+	 */
 	public void afficheCombinaison(String str, Boolean modeD) {
 		System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
 		logger.info("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
 	}
 	
+	/**
+	 * Méthode qui à partir de la proposition courante et du résultat, va générer
+	 * une nouvelle proposition dans le jeu RecherchePlusMoins
+	 * @param res indique case par case si la valeur de la combinaison secrète à l'indice j est 
+	 * 			  "=" pour égale, "-" pour inférieure, "+" pour supérieure à la valeur de la proposition 
+	 * 			 faite par l'ordinateur à l'indice j 
+	 */
 	private void genereProposition(String res) {
 		for(int i = 0;i < this.n;i++) {
+			//On parcourt la proposition et on convertit en entier la caractère de la proposition
+			//à l'indice i
 			int q = Jeu.conversion(this.proposition.charAt(i));
 			if(res.charAt(i) == '-') {
+				//Si res.charAt(i) = '-' on décrémente q
 				q--;
 			} else if(res.charAt(i) == '+') {
+				//Sinon on incrémente q
 				q++;
 			}
+			//On convertit q en caractère
 			char c = Jeu.conversion(q);
+			//Puis on remplace le caractère de la proposition à l'indice i par c
 			char[] tab = this.proposition.toCharArray();
 			tab[i] = c;
 			this.proposition = String.valueOf(tab);
 		}
 	}
 	
-	private String generePropositionMastermind() {
-		String propo = this.proposition;
-		return incremente(propo,this.solution.length());
-	}
-	
-	private String incremente(String propo, int index) {
-		char c = propo.charAt(index);
-		int n = Jeu.conversion(c);
-		
-		if(this.listePresentBis.length() > 0) {
-			char cBis = this.listePresentBis.charAt(0);
-			if(propo.charAt(index) == cBis) {
-				this.listePresentBis = this.removeChar(listePresentBis, cBis);
-				return incremente(propo, index);
-			}
-			if(index == propo.length() - 1) {
-				propo = propo.substring(0, propo.length() - 1) + cBis;
-			} else {
-				propo = propo.substring(0, index)+ cBis + propo.substring(index + 1, propo.length());
-			}
-			this.listePresentBis = this.removeChar(listePresentBis, cBis);
-			
-			
-		} else {
-			
-		
-		
-		do {
-			if(n == this.nbreChiffre - 1) {
-				n = 0;
-			} else {
-				n++;
-			}
-		} while(this.listeNonPresent.indexOf(Jeu.conversion(n)) != -1);
-		c = Jeu.conversion(n);
-		if(index == propo.length() - 1) {
-			propo = propo.substring(0, propo.length() - 1) + c;
-		} else {
-			propo = propo.substring(0, index)+ c + propo.substring(index + 1, propo.length());
-		}
-		}
-		return propo;
-		
-	}
-	
-	private String addCaractere(String liste,char c) {
-		if(liste.indexOf(c) == -1) {
-			liste += c;
-		}
-		return liste;
-	}
-	
-	private String removeChar(String liste, char c) {
-		String str = "";
-		if(liste != null) {
-		int index = liste.indexOf(c);
-		if(index != -1) {
-			str += c;
-			liste = liste.replaceAll(str, "");
-		}
-		}
-		return liste;
-	}
 }
 

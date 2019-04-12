@@ -118,26 +118,46 @@ public class Mastermind extends Jeu {
 				
 	}
 	
+	/**
+	 * La méthode toutesLesCombinaisons() va générer une ArrayList de String contenant toutes les
+	 * combinaisons possibles en fonction du nombre de cases de la combinaison et du nombre de 
+	 * chiffre utilisables pour le mastermind. Cette méthode est récursive.
+	 * @param l ArrayList de String vide au premier appel
+	 * @param nbreCases nombre de cases de la combinaison
+	 * @return une ArrayList de String contenant toutes les combinaisons possibles
+	 */
+	
 	private ArrayList<String> toutesLesCombinaisons(ArrayList<String> l, int nbreCases){
 		ArrayList<String> liste = new ArrayList<String>();
 		String str = "";
 		if(nbreCases <= 0) {
+			//Si le nombre de cases est inférieur ou égal à 0 on retourne l
 			return l;
 		} else if(l.isEmpty()) {
+			//Si l est vide cela veut dire qu'il s'agit du premier appel de la méthode
+			//On stocke dans liste toutes les combinaisons possibles à une case
 			for(int i = 0;i < this.nbreChiffre;i++) {
 				str += i;
 				liste.add(str);
 				str = "";
 			}
+			//On fait un appel récursif de la méthode avec la liste qu'on vient de générer
+			//et on décrémente nbreCases.
 			return toutesLesCombinaisons(liste,nbreCases-1);
 		} else {
+			//Si l n'est pas vide
+			//l contient toutes les combinaisons possibles d'un certain nombre de cases n.
 			for(int i = 0;i < l.size();i++) {
 				str = l.get(i);
 				for(int j = 0;j < this.nbreChiffre;j++) {
+					//A partir de l on va construire une liste de toutes les combinaisons 
+					//possibles avec n+1 cases.
 					liste.add(str + j);
 				}
 				str = "";
 			}
+			//On fait un appel récursif de la méthode avec la liste qu'on vient de générer
+			//et on décrémente nbreCases.
 			return toutesLesCombinaisons(liste,nbreCases-1);
 		}
 	}

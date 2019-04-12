@@ -22,7 +22,7 @@ public class RecherchePlusMoins extends Jeu {
 	 * @param mode le mode du jeu
 	 * @param nbreC le nombre de cases de la combinaison
 	 * @param nbreE le nombre d'essais
-	 * @param modeD booléen à true si le mode développeur est actif
+	 * @param modeD booléen à true si le mode développeur est actif false sinon
 	 */
 	
 	public RecherchePlusMoins(String mode, int nbreC, int nbreE,Boolean modeD) {
