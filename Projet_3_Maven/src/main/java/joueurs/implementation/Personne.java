@@ -40,7 +40,7 @@ public class Personne extends Joueur {
 		Boolean arreter = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		this.afficheCombinaison(combinaison, 'p',modeD);
+		this.afficheCombinaison(combinaison,modeD);
 		
 		do {
 			str = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres");
@@ -72,7 +72,7 @@ public class Personne extends Joueur {
 					//true à arreter 
 					resultat = comparaison(str);
 					System.out.println("Proposition : " + str + " -> Réponse : " + resultat);
-					logger.debug("Proposition : " + str + " -> Réponse : " + resultat);
+					logger.info("Proposition : " + str + " -> Réponse : " + resultat);
 					jop.showMessageDialog(null, "Bravo, vous avez trouvé la combinaison !", "Gagné", JOptionPane.INFORMATION_MESSAGE);
 					arreter = true;
 				} else {
@@ -81,7 +81,7 @@ public class Personne extends Joueur {
 					//on affiche dans la console le résultat de comparaison(str)
 					resultat = comparaison(str);
 					System.out.println("Proposition : " + str + " -> Réponse : " + resultat + "\n");
-					logger.debug("Proposition : " + str + " -> Réponse : " + resultat);
+					logger.info("Proposition : " + str + " -> Réponse : " + resultat);
 					//System.out.println(resultat);
 				}
 			}
@@ -97,7 +97,7 @@ public class Personne extends Joueur {
 		Boolean arreter = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		this.afficheCombinaison(combinaison, 'p',modeD);
+		this.afficheCombinaison(combinaison,modeD);
 		
 		do {
 			proposition = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres");
@@ -122,10 +122,25 @@ public class Personne extends Joueur {
 					int nbreEP = estPresent();
 					resultat = resultatMastermind(nbreBP,nbreEP);
 					System.out.println("Proposition : " + proposition + " -> Réponse : " + resultat + "\n");
+					logger.info("Proposition : " + proposition + " -> Réponse : " + resultat + "\n");
 				}
 			}
 		} while (continuer);
 		return arreter;
+	}
+	
+	public void afficheCombinaison(String str, Boolean modeD) {
+		if(modeD) {
+			System.out.println("(Combinaison secrète que vous devez trouver : " + str + ")");
+			logger.info("(Combinaison secrète que vous devez trouver : " + str + ")");
+		} else {
+			String combiCache = "";
+			for(int i = 0;i < this.n;i++) {
+				combiCache += '*';
+			}
+			System.out.println("(Combinaison secrète que vous devez trouver : " + combiCache + ")");
+			logger.info("(Combinaison secrète que vous devez trouver : " + combiCache + ")");
+		}
 	}
 }
 

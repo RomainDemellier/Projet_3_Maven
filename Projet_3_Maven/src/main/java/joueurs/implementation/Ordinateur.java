@@ -5,6 +5,9 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import jeux.abstractClass.Jeu;
 import joueurs.abstractClass.Joueur;
 
@@ -21,6 +24,7 @@ public class Ordinateur extends Joueur {
 	private String listeNonPresent;
 	private String listePresentBis;
 	private ArrayList<String> listeCombinaisons = new ArrayList<String>();
+	private Logger logger = LogManager.getLogger(Ordinateur.class);
 	
 	public Ordinateur(int n, String combi) {
 		this.n = n;
@@ -61,188 +65,82 @@ public class Ordinateur extends Joueur {
 		Boolean gagne = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		this.afficheCombinaison(combi, 'o', modeD);
+		this.afficheCombinaison(combi, modeD);
 		
 		if(resultat.equals("")) {
 			if(proposition.equals(combi)) {
 				resultat = comparaison(proposition);
 				System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat);
+				logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat);
 				jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 				gagne = true;
 			}else {
 				resultat = comparaison(this.proposition);
 				System.out.println("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat + "\n");
+				logger.info("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat + "\n");
 				genereProposition(resultat);
 			}
 		} else {
 			if(proposition.equals(combi)) {
 				resultat = comparaison(this.proposition);
 				System.out.println("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat);
+				logger.info("Proposition de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat);
 				jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 				gagne = true;
 			} else {
 				resultat = comparaison(this.proposition);
 				System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
+				logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
 				genereProposition(resultat);
 			}
 		}
 		return gagne;
 	}
 	
-	/*public Boolean jouerMastermind() {
-		int n = this.n;
-		String combi = this.combinaison;
-		String propo = this.proposition;
-		int nbreBP;
-		int nbreEP;
-		String resultat = "";
-		JOptionPane jop = new JOptionPane();
-		Jeu.afficheCombinaison(combinaison, 'o');
-		
-		if(this.nombreBienPlace == -1) {
-			this.nombreBienPlace = this.bienPlace(propo);
-			this.nombreEstPresent = this.estPresent();
-			resultat = this.resultatMastermind(this.nombreBienPlace, this.nombreEstPresent);
-			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat + "\n");
-		} else {
-			propo = generePropositionMastermind();
-			nbreBP = bienPlace(propo);
-			nbreEP = estPresent();
-			char c;
-			if(nbreBP > this.nombreBienPlace) {	
-			
-				this.listePresentBis = this.listePresent;
-				
-				if(this.nombreEstPresent == 0 && nbreEP == 0) {
-					c = this.proposition.charAt(this.solution.length());
-					this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-					this.listePresent = this.removeChar(listePresent, c);
-					this.listePresentBis = this.removeChar(listePresentBis, c);
-				}
-				this.nombreBienPlace = nbreBP;
-				this.nombreEstPresent = nbreEP;
-				this.proposition = propo;
-				this.solution += this.proposition.charAt(this.solution.length());
-				
-			} else if(nbreBP < this.nombreBienPlace){
-				
-				this.listePresentBis = this.listePresent;
-				
-				c = propo.charAt(this.solution.length());
-				this.solution += this.proposition.charAt(this.solution.length());
-				if(nbreEP > this.nombreEstPresent) {
-					//c = propo.charAt(this.solution.length());
-					System.out.println("Dans nbreEP >");
-					this.listePresent = this.addCaractere(listePresent, c);
-					//this.listePresentBis = this.addCaractere(listePresentBis, c);
-				} if(nbreEP == 0) {
-					this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-					this.listePresent = this.removeChar(listePresent, c);
-					this.listePresentBis = this.removeChar(listePresentBis, c);
-				}
-			} else {
-				if(this.nombreBienPlace > 0) {
-					if(nbreEP > this.nombreEstPresent) {
-						c = propo.charAt(this.solution.length());
-						
-						this.listePresent = this.addCaractere(listePresent, c);
-						//this.listePresentBis = this.addCaractere(listePresentBis, c);
-					} else if(nbreEP < this.nombreEstPresent) {
-						c = this.proposition.charAt(this.solution.length());
-						
-						this.listePresent = this.addCaractere(listePresent, c);
-						//this.listePresentBis = this.addCaractere(listePresentBis, c);
-						if(nbreEP == 0) {
-							c = propo.charAt(this.solution.length());
-							this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-							this.listePresent = this.removeChar(listePresent, c);
-							this.listePresentBis = this.removeChar(listePresentBis, c);
-						}
-					} else if(nbreEP == 0){
-						c = this.proposition.charAt(this.solution.length());
-						this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-						this.listePresent = this.removeChar(listePresent, c);
-						this.listePresentBis = this.removeChar(listePresentBis, c);
-						c = propo.charAt(this.solution.length());
-						this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-						this.listePresent = this.removeChar(listePresent, c);
-						this.listePresentBis = this.removeChar(listePresentBis, c);
-					}
-				} else {
-					if(this.nombreEstPresent == 0) {
-						c = this.proposition.charAt(this.solution.length());
-						this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-						this.listePresent = this.removeChar(listePresent, c);
-						this.listePresentBis = this.removeChar(listePresentBis, c);
-					}
-					if(nbreEP == 0) {
-						c = propo.charAt(this.solution.length());
-						this.listeNonPresent = this.addCaractere(this.listeNonPresent, c);
-						this.listePresent = this.removeChar(listePresent, c);
-						this.listePresentBis = this.removeChar(listePresentBis, c);
-					}
-				}
-				this.proposition = propo;
-				this.nombreBienPlace = nbreBP;
-				this.nombreEstPresent = nbreEP;
-			}
-			//this.nombreEstPresent = nbreEP;
-			resultat = this.resultatMastermind(this.nombreBienPlace, this.nombreEstPresent);
-			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
-			System.out.println("Liste des présents : " + this.listePresent);
-			System.out.println("Liste des présents bis : " + this.listePresentBis);
-			System.out.println("Liste des non présents : " + this.listeNonPresent);
-			if(this.solution.length() == this.n) {
-				jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
-				return true;
-			}
-		}
-		Boolean gagne = false;
-		return gagne;
-	}*/
 	
 	public Boolean jouerMastermind(Boolean modeD) {
 		Boolean gagne = false;
 		JOptionPane jop = new JOptionPane();
 		String resultat = "";
-		this.afficheCombinaison(combinaison, 'o',modeD);
+		this.afficheCombinaison(combinaison,modeD);
 		int nombreCombinaisons = this.listeCombinaisons.size();
 		int choixCombinaison = (int)(Math.random() * nombreCombinaisons);
 		String combinaisonChoisi = this.listeCombinaisons.get(choixCombinaison);
-		ArrayList<String> liste = new ArrayList<String>();
 		
 		System.out.println("Combinaison choisi : " + combinaisonChoisi);
 		
 		if(combinaisonChoisi.equals(this.combinaison)) {
 			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
+			logger.info("L'ordinateur a trouvé la combinaison.");
 			return true;
 		} else {
 			
-			int nbreBienPlace = this.bienPlace(combinaison, combinaisonChoisi);
-			int nbrePresent = this.estPresent();
+			int[] tabResultat = new int[2];
+			tabResultat = this.bienPlace(combinaison, combinaisonChoisi);
+			int nbreBienPlace = tabResultat[0];
+			int nbrePresent = tabResultat[1];
 			resultat = this.resultatMastermind(nbreBienPlace, nbrePresent);
 			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
-			/*for(int i = this.listeCombinaisons.size() - 1;i >= 0;i--) {
-				String str = this.listeCombinaisons.get(i);
-				int nBP = this.bienPlace(combinaisonChoisi, str);
-				int nEP = this.estPresent();
-				if(nbreBienPlace == nBP && nbrePresent == nEP) {
-					//this.listeCombinaisons.remove(i);
-					liste.add(listeCombinaisons.get(i));
-				}
-			}
-			this.listeCombinaisons = liste;*/
+			logger.info("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
+			
 			ListIterator li = this.listeCombinaisons.listIterator();
 			while(li.hasNext()) {
 				String str = (String)li.next();
-				int nBP = this.bienPlace(combinaisonChoisi,str);
-				int nEP = this.estPresent();
+				int[] tabResultat2 = new int[2];
+				tabResultat2 = this.bienPlace(combinaisonChoisi,str);
+				int nBP = tabResultat2[0];
+				int nEP = tabResultat2[1];
 				if(nbreBienPlace != nBP || nbrePresent != nEP) {
 					li.remove();
 				}
 			}
 			return false;
 		}
+	}
+	
+	public void afficheCombinaison(String str, Boolean modeD) {
+		System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
+		logger.info("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
 	}
 	
 	private void genereProposition(String res) {

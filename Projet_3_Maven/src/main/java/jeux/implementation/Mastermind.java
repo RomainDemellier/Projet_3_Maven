@@ -118,38 +118,6 @@ public class Mastermind extends Jeu {
 				
 	}
 	
-	private ArrayList<String> toutesLesCombinaisons(){
-		ArrayList<String> liste = new ArrayList<String>();
-		String str = "";
-		for(int i1 = 0;i1 < this.nbreChiffre;i1++) {
-			for(int i2 = 0;i2 < this.nbreChiffre;i2++) {
-				for(int i3 = 0;i3 < this.nbreChiffre;i3++) {
-					for(int i4 = 0;i4 < this.nbreChiffre;i4++) {
-						for(int i5 = 0;i5 < this.nbreChiffre;i5++) {
-							for(int i6 = 0;i6 < this.nbreChiffre;i6++) {
-								for(int i7 = 0;i7 < this.nbreChiffre;i7++) {
-									for(int i8 = 0;i8 < this.nbreChiffre;i8++) {
-										str += i1;
-										str += i2;
-										str += i3;
-										str += i4;
-										str += i5;
-										str += i6;
-										str += i7;
-										str += i8;
-										liste.add(str);
-										str = "";
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return liste;
-	}
-	
 	private ArrayList<String> toutesLesCombinaisons(ArrayList<String> l, int nbreCases){
 		ArrayList<String> liste = new ArrayList<String>();
 		String str = "";

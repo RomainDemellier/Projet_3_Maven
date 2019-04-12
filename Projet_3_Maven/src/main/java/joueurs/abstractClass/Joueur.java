@@ -39,6 +39,8 @@ public abstract class Joueur {
 	 */
 	public abstract Boolean jouerMastermind(Boolean modeD);
 	
+	public abstract void afficheCombinaison(String str, Boolean modeD);
+	
 	/**
 	 * méthode qui va comparer la chaîne saisie par l' utilisateur ou
 	 * générée par l'ordinateur selon le mode de jeu avec la combinaison secrète
@@ -107,7 +109,8 @@ public abstract class Joueur {
 		return compteur;
 	}
 	
-	protected int bienPlace(String combinaison, String str) {
+	protected int[] bienPlace(String combinaison, String str) {
+		int tabResultat[] = new int[2];
 		this.resteProposition = "";
 		this.resteCombinaison = "";
 		int compteur = 0;
@@ -120,7 +123,34 @@ public abstract class Joueur {
 				this.resteCombinaison += combinaison.charAt(i);
 			}
 		}
-		return compteur;
+		tabResultat[0] = compteur;
+		
+		compteur = 0;
+		
+		//On parcourt restePropo
+		for(int i = 0;i < this.resteProposition.length();i++) {
+			
+			//On teste la présence du caractère restePropo.charAt(i)
+			//dans resteCombi
+			int presenceIndex = this.resteCombinaison.indexOf(this.resteProposition.charAt(i));
+			if(presenceIndex != -1) {
+				//System.out.println("Presence à l'index : " + presenceIndex);
+				//Si le caractère est présent on incrémente compteur
+				compteur++;
+				//Puis on retire ce caractère de resteCombi
+				//On distingue deux cas
+				//Soit le caractère est au bout de la chaîne
+				//Soit il n'est pas en bout de chaîne
+				if(presenceIndex == this.resteCombinaison.length() - 1) {
+					this.resteCombinaison = this.resteCombinaison.substring(0, this.resteCombinaison.length() - 1);
+				} else {
+					this.resteCombinaison = this.resteCombinaison.substring(0, presenceIndex) +
+								 this.resteCombinaison.substring(presenceIndex + 1, this.resteCombinaison.length());
+				}
+			}
+		}
+		tabResultat[1] = compteur;
+		return tabResultat;
 	}
 	
 	/**
@@ -180,20 +210,6 @@ public abstract class Joueur {
 			resultat += " est présent.";
 		}
 		return resultat;
-	}
-	
-	public void afficheCombinaison(String str, char c, Boolean modeD) {
-		if(c == 'o') {
-			System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
-		} else if(modeD) {
-			System.out.println("(Combinaison secrète que vous devez trouver : " + str + ")");
-		} else {
-			String combiCache = "";
-			for(int i = 0;i < this.n;i++) {
-				combiCache += '*';
-			}
-			System.out.println("(Combinaison secrète que vous devez trouver : " + combiCache + ")");
-		}
 	}
 
 }

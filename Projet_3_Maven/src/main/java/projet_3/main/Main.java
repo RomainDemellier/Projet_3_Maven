@@ -10,19 +10,20 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import jdk.internal.jline.internal.Log;
 import jeux.abstractClass.Jeu;
 import jeux.implementation.Mastermind;
 import jeux.implementation.RecherchePlusMoins;
 
 public class Main {
 
-	//private static Logger logger = LogManager.getLogger(Main.class);
+	private static Logger logger = LogManager.getLogger(Main.class);
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Début du programme !");
-		
+		logger.info("Début du programme");
 		final Properties prop = new Properties();
 		InputStream input = null;
 		int nbreCases = -1;
@@ -110,7 +111,7 @@ public class Main {
 					continuer = false;
 				}
 			} while(continuer);
-		//}
+		logger.info("Fin du programme");
 	}
 
 }
