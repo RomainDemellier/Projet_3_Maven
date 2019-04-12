@@ -4,12 +4,24 @@ import javax.swing.JOptionPane;
 
 import joueurs.abstractClass.Joueur;
 
+/**
+ * Classe abstraite Jeu 
+ * Les classes RecherchePlusMoins et Mastermind vont hériter de Jeu
+ * @author romaindemellier
+ *
+ */
+
 public abstract class Jeu {
 
 	/**
 	 * Chaque jeu a un joueur.
 	 */
-	protected Joueur joueur;
+	protected Joueur joueur1;
+	
+	/**
+	 * Deuxième joueur dans le mode duel
+	 */
+	protected Joueur joueur2;
 	/**
 	 * Dans le mode duel la variable aQuiLeTour permet de savoir qui doit jouer.
 	 * Elle est initialisé à "personne" (C'est un joueur "humain" qui commence)
@@ -29,6 +41,12 @@ public abstract class Jeu {
 	 */
 	
 	protected String mode;
+	
+	/**
+	 * modeDeveloppeur vaut true si le mode deéveloppeur est actif false sinon
+	 */
+	
+	protected Boolean modeDeveloppeur;
 
 	/**
 	 * La méthode genereCombinaison permet de créer une combianison
@@ -52,12 +70,21 @@ public abstract class Jeu {
 		return str;
 	}
 	
+	/**
+	 * La méthode genereCombinaison(int nbreChiffre) permet de créer une combinaison
+	 * de façcon aléatoire pour le jeu mastermind
+	 * 
+	 * @param nbreChiffre 
+	 * 				paramètre qui indique le nombre de chiffres utilisables pour le mastermind 
+	 * @return la combinaison
+	 */
+	
 	protected  String genereCombinaison(int nbreChiffre) {
 		int n = this.nbreCases;
 		int chiffreAleatoire;
 		String str = "";
 		for(int i = 0;i < n;i++) {
-			//chiffreAleatoire va contenir un entier compris entre 0 et 9
+			//chiffreAleatoire va contenir un entier compris entre 0 et nbreChiffre
 			chiffreAleatoire = (int)(Math.random()*nbreChiffre);
 			//On convertit le chiffre en caractère
 			//et on l'ajoute à la combinaison
@@ -72,13 +99,25 @@ public abstract class Jeu {
 	 * @param str la combinaison secrète 
 	 */
 	
-	public static void afficheCombinaison(String str, char c) {
-		if(c == 'p') {
-			System.out.println("(Combinaison secrète que vous devez trouver : " + str + ")");
+	/*public void afficheCombinaison(String str, char c, Boolean modeD) {
+		if(modeD) {
+			if(c == 'p') {
+				System.out.println("(Combinaison secrète que vous devez trouver : " + str + ")");
+			} else {
+				System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
+			}
 		} else {
-			System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
+			String combiCache = "";
+			for(int i = 0;i < this.nbreCases;i++) {
+				combiCache += '*';
+			}
+			if(c == 'p') {
+				System.out.println("(Combinaison secrète que vous devez trouver : " + combiCache + ")");
+			} else {
+				System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + combiCache + ")");
+			}
 		}
-	}
+	}*/
 	
 	public static Boolean stringComposeChiffres(String str) {
 		
@@ -139,6 +178,13 @@ public abstract class Jeu {
 		return str;
 	}
 	
+	/**
+	 * Permet à l'utilisateur de choisir la combinaison secrète
+	 * dans le mode défenseur pour le jeu mastermind
+	 * @param nbreChiffre
+	 * 				paramètre qui indique le nombre de chiffres utilisables pour le mastermind 
+	 * @return la combinaison saisie par l'utilisateur
+	 */
 	protected String chooseCombi(int nbreChiffre) {
 		int n = this.nbreCases;
 		String str = "";
@@ -168,7 +214,7 @@ public abstract class Jeu {
 	}
 	
 	/**
-	 * 
+	 * Méthode static qui convertit un entier en caractère
 	 * @param q entier à convertir en caractère
 	 * @return le caractère correspondant à q 
 	 */
@@ -204,7 +250,7 @@ public abstract class Jeu {
 	}
 	
 	/**
-	 * 
+	 * Méthode static qui convertit un caractère en entier
 	 * @param c caractère à convertir en entier
 	 * @return entier correspondant à c
 	 */

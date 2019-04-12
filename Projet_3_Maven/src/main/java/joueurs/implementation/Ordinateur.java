@@ -1,6 +1,7 @@
 package joueurs.implementation;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
@@ -54,13 +55,13 @@ public class Ordinateur extends Joueur {
 		this.listePresentBis = "";*/
 	}
 	
-	public Boolean jouerPlusMoins() {
+	public Boolean jouerPlusMoins(Boolean modeD) {
 		int n = this.n;
 		String combi = this.combinaison;
 		Boolean gagne = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		Jeu.afficheCombinaison(combi, 'o');
+		this.afficheCombinaison(combi, 'o', modeD);
 		
 		if(resultat.equals("")) {
 			if(proposition.equals(combi)) {
@@ -200,11 +201,11 @@ public class Ordinateur extends Joueur {
 		return gagne;
 	}*/
 	
-	public Boolean jouerMastermind() {
+	public Boolean jouerMastermind(Boolean modeD) {
 		Boolean gagne = false;
 		JOptionPane jop = new JOptionPane();
 		String resultat = "";
-		Jeu.afficheCombinaison(combinaison, 'o');
+		this.afficheCombinaison(combinaison, 'o',modeD);
 		int nombreCombinaisons = this.listeCombinaisons.size();
 		int choixCombinaison = (int)(Math.random() * nombreCombinaisons);
 		String combinaisonChoisi = this.listeCombinaisons.get(choixCombinaison);
@@ -216,11 +217,12 @@ public class Ordinateur extends Joueur {
 			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 			return true;
 		} else {
+			
 			int nbreBienPlace = this.bienPlace(combinaison, combinaisonChoisi);
 			int nbrePresent = this.estPresent();
 			resultat = this.resultatMastermind(nbreBienPlace, nbrePresent);
 			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
-			for(int i = this.listeCombinaisons.size() - 1;i >= 0;i--) {
+			/*for(int i = this.listeCombinaisons.size() - 1;i >= 0;i--) {
 				String str = this.listeCombinaisons.get(i);
 				int nBP = this.bienPlace(combinaisonChoisi, str);
 				int nEP = this.estPresent();
@@ -229,7 +231,16 @@ public class Ordinateur extends Joueur {
 					liste.add(listeCombinaisons.get(i));
 				}
 			}
-			this.listeCombinaisons = liste;
+			this.listeCombinaisons = liste;*/
+			ListIterator li = this.listeCombinaisons.listIterator();
+			while(li.hasNext()) {
+				String str = (String)li.next();
+				int nBP = this.bienPlace(combinaisonChoisi,str);
+				int nEP = this.estPresent();
+				if(nbreBienPlace != nBP || nbrePresent != nEP) {
+					li.remove();
+				}
+			}
 			return false;
 		}
 	}

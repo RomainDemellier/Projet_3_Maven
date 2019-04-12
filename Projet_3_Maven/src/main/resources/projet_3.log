@@ -4,3 +4,8 @@
 2019-04-04 17:04:29 INFO  Main:22 - Ceci est un message d'info
 2019-04-04 17:04:29 DEBUG Main:23 - Ceci est un message de debug
 2019-04-04 17:04:37 DEBUG Personne:84 - Proposition : 12345678 -> Réponse : =-=++---
+2019-04-11 11:07:02 DEBUG Personne:84 - Proposition : 543267 -> Réponse : =-++-+
+2019-04-11 11:07:14 DEBUG Personne:75 - Proposition : 518349 -> Réponse : ======
+2019-04-11 11:11:04 DEBUG Personne:84 - Proposition : 123456 -> Réponse : ++--++
+2019-04-11 11:11:14 DEBUG Personne:84 - Proposition : 221178 -> Réponse : =+++==
+2019-04-11 11:11:25 DEBUG Personne:84 - Proposition : 235789 -> Réponse : =+----

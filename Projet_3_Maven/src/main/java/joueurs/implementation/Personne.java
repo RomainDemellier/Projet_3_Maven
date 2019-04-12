@@ -32,7 +32,7 @@ public class Personne extends Joueur {
 	 * @return un booléen : vrai si l'utilisateur a trouvé la combinaison
 	 * 		   secrète ou si il décide de quitter le jeu
 	 */
-	public Boolean jouerPlusMoins() {
+	public Boolean jouerPlusMoins(Boolean modeD) {
 		int n = this.n;
 		String combinaison = this.combinaison;
 		String str = "";
@@ -40,7 +40,7 @@ public class Personne extends Joueur {
 		Boolean arreter = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		Jeu.afficheCombinaison(combinaison, 'p');
+		this.afficheCombinaison(combinaison, 'p',modeD);
 		
 		do {
 			str = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres");
@@ -89,7 +89,7 @@ public class Personne extends Joueur {
 		return arreter;
 	}
 	
-	public Boolean jouerMastermind() {
+	public Boolean jouerMastermind(Boolean modeD) {
 		int n = this.n;
 		String combinaison = this.combinaison;
 		String proposition = "";
@@ -97,7 +97,7 @@ public class Personne extends Joueur {
 		Boolean arreter = false;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
-		Jeu.afficheCombinaison(combinaison, 'p');
+		this.afficheCombinaison(combinaison, 'p',modeD);
 		
 		do {
 			proposition = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres");

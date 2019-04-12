@@ -24,19 +24,20 @@ public abstract class Joueur {
 	 * qui n'ont pas été trouvés
 	 */
 	protected String resteCombinaison;
+	
 
 	/**
 	 * méthode abstraite définie dans les classes Personne et Ordinateur
 	 * @return booléen vrai si on a trouvé la combinaison ou si on
 	 * veut arrêter
 	 */
-	public abstract Boolean jouerPlusMoins();
+	public abstract Boolean jouerPlusMoins(Boolean modeD);
 	/**
 	 * méthode abstraite définie dans les classes Personne et Ordinateur
 	 * @return booléen vrai si on a trouvé la combinaison ou si on
 	 * veut arrêter
 	 */
-	public abstract Boolean jouerMastermind();
+	public abstract Boolean jouerMastermind(Boolean modeD);
 	
 	/**
 	 * méthode qui va comparer la chaîne saisie par l' utilisateur ou
@@ -179,6 +180,20 @@ public abstract class Joueur {
 			resultat += " est présent.";
 		}
 		return resultat;
+	}
+	
+	public void afficheCombinaison(String str, char c, Boolean modeD) {
+		if(c == 'o') {
+			System.out.println("(Combinaison secrète que l'ordinateur doit trouver : " + str + ")");
+		} else if(modeD) {
+			System.out.println("(Combinaison secrète que vous devez trouver : " + str + ")");
+		} else {
+			String combiCache = "";
+			for(int i = 0;i < this.n;i++) {
+				combiCache += '*';
+			}
+			System.out.println("(Combinaison secrète que vous devez trouver : " + combiCache + ")");
+		}
 	}
 
 }
