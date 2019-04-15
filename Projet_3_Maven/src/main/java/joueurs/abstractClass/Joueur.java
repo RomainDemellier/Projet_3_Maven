@@ -72,43 +72,6 @@ public abstract class Joueur {
 		return res;
 	}
 	
-	/**
-	 * 
-	 */
-	
-	/*protected int bienPlace(String str) {
-		
-		String combi = this.combinaison;
-		this.resteProposition = "";
-		this.resteCombinaison = "";
-		
-		//cette variable va contenir les caractères de la proposition
-		//qui ne sont pas bien placés
-		//String resteProposition = "";
-		
-		//cette variable va contenir les caractères de la combinaison 
-		//secrète qui n'ont pas été trouvés
-		//String resteCombinaison = "";
-		
-		//compteur va nous indiquer le nombre de caractères bien placés
-		int compteur = 0;
-		int l = str.length();
-		String message = "";
-		
-		for(int i = 0;i < l;i++) {
-			if(str.charAt(i) == combi.charAt(i)) {
-				//Si les deux caractères sont égaux on incrémente compteur
-				compteur++;
-			} else {
-				//Si les deux caractères sont différents on les place
-				//respectivement dans resteProposition et dans resteCombinaison
-				resteProposition += str.charAt(i);
-				resteCombinaison += combi.charAt(i);
-			}
-		}
-		return compteur;
-	}*/
-	
 	protected int[] bienPlace(String combinaison, String str) {
 		int tabResultat[] = new int[2];
 		this.resteProposition = "";
