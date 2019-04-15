@@ -1,6 +1,6 @@
 # Projet_3_Maven
 
-##Petit programme contenant deux jeux : Recherche+- et Mastermind.
+## Petit programme contenant deux jeux : Recherche+- et Mastermind.
 
 <p>
 Au lancement du programme on doit d'abord choisir le jeu auquel on veut jouer.	
@@ -12,5 +12,5 @@ Puis il faut choisir le mode : <br>
 	<li>defenseur : c'est l'ordinateur qui doit trouver la combinaison que vous aurez choisi.</li>
 	<li>duel : vous jouez contre l'ordinateur. </li>
 </ul>
-</p>p>
+</p>
 
