@@ -69,7 +69,7 @@ public class Ordinateur extends Joueur {
 		if(proposition.equals(combi)) {
 			//Si la proposition est égale à la combinaison secrète une boîte de dialogue
 			//apparaît indiquant que l'ordinateur a trouvé la combinaison et gagne prend la valeur true
-			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
+			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !\n" + proposition, "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 			logger.info("L'ordinateur a trouvé la combinaison.");
 			return true;
 		} else {
@@ -79,7 +79,7 @@ public class Ordinateur extends Joueur {
 			resultat = comparaison(this.proposition);
 			//On affiche le résultat dans la console
 			System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
-			logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
+			logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat);
 			//On génère une nouvelle proposition découlant de la proposition précédente
 			//et du resultat de la méthode comparaison
 			genereProposition(resultat);
@@ -102,14 +102,14 @@ public class Ordinateur extends Joueur {
 		//choixCombinaison est un entier pris au hasard compris entre 0 et nombreCombinaisons - 1
 		int choixCombinaison = (int)(Math.random() * nombreCombinaisons);
 		//On choisit la combinaison à l'indice choixCombinaison dans listeCombinaisons
-		String combinaisonChoisi = this.listeCombinaisons.get(choixCombinaison);
+		String proposition = this.listeCombinaisons.get(choixCombinaison);
 		
-		System.out.println("Combinaison choisi : " + combinaisonChoisi);
+		//System.out.println("Combinaison choisi : " + combinaisonChoisi);
 		
-		if(combinaisonChoisi.equals(this.combinaison)) {
+		if(proposition.equals(this.combinaison)) {
 			//Si la combinaison choisie est égale à la combinaison secrète
 			//une boîte de dialogue apparaît indiquant que l'ordinateur a trouvé la combinaison
-			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !", "Trouvé", JOptionPane.INFORMATION_MESSAGE);
+			jop.showMessageDialog(null, "L'ordinateur a trouvé la combinaison !\n" + proposition, "Trouvé", JOptionPane.INFORMATION_MESSAGE);
 			logger.info("L'ordinateur a trouvé la combinaison.");
 			return true;
 		} else {
@@ -118,14 +118,14 @@ public class Ordinateur extends Joueur {
 			//chiffres bien placés ainsi que le nombre de chiffres présents de la 
 			//combinaison choisie par rapport à la combinaison secrète
 			int[] tabResultat = new int[2];
-			tabResultat = this.bienPlace(combinaison, combinaisonChoisi);
+			tabResultat = this.bienPlace(combinaison, proposition);
 			//On affecte nbreBienPlace le nombre de bien placés
 			int nbreBienPlace = tabResultat[0];
 			//On affecte à nbrePresent le nombre de présents
 			int nbrePresent = tabResultat[1];
 			resultat = this.resultatMastermind(nbreBienPlace, nbrePresent);
 			//On affiche le résultat (nombre de bien placés, nombre de présents)
-			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
+			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat + "\n");
 			logger.info("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
 			
 			ListIterator li = this.listeCombinaisons.listIterator();
@@ -138,7 +138,7 @@ public class Ordinateur extends Joueur {
 				//nbreBienPlace de bien placés et nbrePresent de présents par rapport à la combinaison choisie
 				String str = (String)li.next();
 				int[] tabResultat2 = new int[2];
-				tabResultat2 = this.bienPlace(combinaisonChoisi,str);
+				tabResultat2 = this.bienPlace(proposition,str);
 				int nBP = tabResultat2[0];
 				int nEP = tabResultat2[1];
 				if(nbreBienPlace != nBP || nbrePresent != nEP) {

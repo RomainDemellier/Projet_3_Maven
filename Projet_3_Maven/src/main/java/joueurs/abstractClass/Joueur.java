@@ -76,7 +76,7 @@ public abstract class Joueur {
 	 * 
 	 */
 	
-	protected int bienPlace(String str) {
+	/*protected int bienPlace(String str) {
 		
 		String combi = this.combinaison;
 		this.resteProposition = "";
@@ -107,7 +107,7 @@ public abstract class Joueur {
 			}
 		}
 		return compteur;
-	}
+	}*/
 	
 	protected int[] bienPlace(String combinaison, String str) {
 		int tabResultat[] = new int[2];
@@ -154,47 +154,13 @@ public abstract class Joueur {
 	}
 	
 	/**
-	 * Méthode qui permet de connaître le nombre de caractères présents
-	 * @param restePropo est la proposition sans les caractères présents
-	 * @param resteCombi est la combinaison secrète les caractères trouvés
-	 * @param message contient le message indiquant le nombre de carctères
-	 * 		  présents
-	 * @return un message qui va contenir le message de la méthode bienPlace
-	 * 	 	   plus le nombre de caractères bien placés	
+	 * Méthode qui sert à afficher le nombre de bien placés et de présents dans le 
+	 * jeu mastermind de la proposition par rapport à la combinaison secrète
+	 * @param nbreBP nombre de bien placés
+	 * @param nbreEP nombre de présents
+	 * @return une chaîne de caractères indiquant le nombre de bien placés et
+	 * 		   le nombre de présents dans le jeu mastermind
 	 */
-	
-	protected int estPresent() {
-		
-		
-		//compteur va nous indiquer le nombre de caractères présents
-		int compteur = 0;
-		
-		//On parcourt restePropo
-		for(int i = 0;i < this.resteProposition.length();i++) {
-			
-			//On teste la présence du caractère restePropo.charAt(i)
-			//dans resteCombi
-			int presenceIndex = this.resteCombinaison.indexOf(this.resteProposition.charAt(i));
-			if(presenceIndex != -1) {
-				//System.out.println("Presence à l'index : " + presenceIndex);
-				//Si le caractère est présent on incrémente compteur
-				compteur++;
-				//Puis on retire ce caractère de resteCombi
-				//On distingue deux cas
-				//Soit le caractère est au bout de la chaîne
-				//Soit il n'est pas en bout de chaîne
-				if(presenceIndex == this.resteCombinaison.length() - 1) {
-					this.resteCombinaison = this.resteCombinaison.substring(0, this.resteCombinaison.length() - 1);
-				} else {
-					this.resteCombinaison = this.resteCombinaison.substring(0, presenceIndex) +
-								 this.resteCombinaison.substring(presenceIndex + 1, this.resteCombinaison.length());
-				}
-			}
-		}
-		
-		return compteur;
-	}
-	
 	public String resultatMastermind(int nbreBP, int nbreEP) {
 		String resultat = "";
 		resultat += nbreBP;

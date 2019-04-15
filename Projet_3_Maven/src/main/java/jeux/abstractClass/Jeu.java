@@ -70,6 +70,7 @@ public abstract class Jeu {
 		return str;
 	}
 	
+	
 	/**
 	 * La méthode genereCombinaison(int nbreChiffre) permet de créer une combinaison
 	 * de façcon aléatoire pour le jeu mastermind

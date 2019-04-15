@@ -47,7 +47,7 @@ public class Mastermind extends Jeu {
 				//Si le mode est challenger la combinaison secrète va
 				//être générée par l'ordinateur avec la méthode genereCombinaison() et le joueur sera une 
 				//personne humaine
-				String combi = this.genereCombinaison();
+				String combi = this.genereCombinaison(this.nbreChiffre);
 				this.joueur1 = new Personne(this.nbreCases, combi);
 				do {
 					//Tant que l'utilisateur n'a pas trouvé la combinaison
