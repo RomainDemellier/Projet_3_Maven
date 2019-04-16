@@ -54,7 +54,15 @@ public class RecherchePlusMoins extends Jeu {
 				//Tant que l'utilisateur n'a pas trouvé la combinaison
 				//secrète ou décidé de quitter
 				gagne = this.joueur1.jouerPlusMoins(this.modeDeveloppeur);
-			} while(!gagne);
+				//A chaque tour on décrémente nbreEssai
+				this.nbreEssai--;
+			} while(!gagne && this.nbreEssai > 0);
+			
+			if(this.nbreEssai <= 0 && !gagne) {
+				//Si le nombre d'essais est dépassé et que l'utilisateur n'a pas trouvé
+				//la combinaison secrète une boîte de dialogue s'affiche
+				jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+			}
 				
 		} else if(mode.equals("defenseur")) {
 			//Si le mode est défenseur c'est l'utilisateur qui va 
@@ -72,8 +80,17 @@ public class RecherchePlusMoins extends Jeu {
 					if(choix == 1) {
 						break;
 					}
-				} while(!gagne);
-				//Si l'ordinateur a trouvé la combinaison on sort de la boucle
+					//A chaque tour on décrémente nbreEssai
+					this.nbreEssai--;
+					
+				} while(!gagne && this.nbreEssai > 0);
+				
+				if(this.nbreEssai <= 0 && !gagne) {
+					//Si le nombre d'essais est dépassé et que l'ordinateur n'a pas trouvé
+					//la combinaison secrète une boîte de dialogue s'affiche
+					jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			} else {
 				gagne = true;
 			}
@@ -104,10 +121,19 @@ public class RecherchePlusMoins extends Jeu {
 					gagne = joueur2.jouerPlusMoins(this.modeDeveloppeur);
 					//C'est au tour de l'utilisateur
 					aQuiLeTour = "personne";
+					//On décrémente nbreEssai une fois que l'utilisateur et l'ordinateur
+					//ont joué.
+					this.nbreEssai--;
 				}
-			} while(!gagne);
+				
+			} while(!gagne && this.nbreEssai > 0);
 			//Si un des deux joueurs a gagné ou que l'utilisateur a quitté
-			//on sort de la boucle
+			//ou que le nombre d'essais est dépassé on sort de la boucle 
+			if(this.nbreEssai <= 0 && !gagne) {
+				//Si le nombre d'essais est dépassé et que ni l'utilisateur ni
+				//l'ordinateur n'ont trouvé la combinaison secrète une boîte de dialogue s'affiche
+				jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 }

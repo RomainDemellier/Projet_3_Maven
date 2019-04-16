@@ -48,12 +48,19 @@ public class Mastermind extends Jeu {
 				//être générée par l'ordinateur avec la méthode genereCombinaison() et le joueur sera une 
 				//personne humaine
 				String combi = this.genereCombinaison(this.nbreChiffre);
-				this.joueur1 = new Personne(this.nbreCases, combi);
+				this.joueur1 = new Personne(this.nbreCases, combi, this.nbreChiffre);
 				do {
 					//Tant que l'utilisateur n'a pas trouvé la combinaison
 					//secrète ou décidé de quitter
 					gagne = this.joueur1.jouerMastermind(this.modeDeveloppeur);
-				} while(!gagne);
+					this.nbreEssai--;
+				} while(!gagne && this.nbreEssai > 0);
+				
+				if(this.nbreEssai <= 0 && !gagne) {
+					//Si le nombre d'essais est dépassé et que l'utilisateur n'a pas trouvé
+					//la combinaison secrète une boîte de dialogue s'affiche
+					jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+				}
 				
 			} else if(mode.equals("defenseur")) {
 				//Si le mode est défenseur on va créer une ArrayList<String> qui va contenir
@@ -79,18 +86,25 @@ public class Mastermind extends Jeu {
 						if(choix == 1) {
 							break;
 						}
-					} while(!gagne);
-					//Si l'ordinateur a trouvé la combinaison on sort de la boucle
+						this.nbreEssai--;
+					} while(!gagne && this.nbreEssai > 0);
+					
+					if(this.nbreEssai <= 0 && !gagne) {
+						//Si le nombre d'essais est dépassé et que l'ordinateur n'a pas trouvé
+						//la combinaison secrète une boîte de dialogue s'affiche
+						jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
 				} 
 			} else {
 				//Si le mode est duel l'utilisateur et l'ordinateur vont jouer
 				//à tour de rôle. C'est l'utilisateur qui commence.
 				//La combinaison que l'utilisateur devra trouver sera générée par l'ordinateur
-				//avec genereCombinaison(). Celle que l'ordinateur devra trouver sera choisi
+				//avec genereCombinaison(). Celle que l'ordinateur devra trouver sera choisie
 				//par l'utilisateur avec chooseCombi()
 				combi1 = this.genereCombinaison(this.nbreChiffre);
 				String proposition = this.genereCombinaison(this.nbreChiffre);
-				this.joueur1 = new Personne(nbreCases, combi1);
+				this.joueur1 = new Personne(nbreCases, combi1,this.nbreChiffre);
 				combi2 = this.chooseCombi(this.nbreChiffre);
 				//on crée une ArrayList<String> qui va contenir toutes les combinaisons possibles avec la méthode toutesLesCombinaisons()
 				ArrayList<String> listeCombinaisons = toutesLesCombinaisons(new ArrayList<String>(),this.nbreCases);
@@ -112,8 +126,18 @@ public class Mastermind extends Jeu {
 						gagne = joueur2.jouerMastermind(this.modeDeveloppeur);
 						//C'est au tour de l'utilisateur
 						aQuiLeTour = "personne";
+						//On décrémente nbreEssai une fois que l'utilisateur et l'ordinateur
+						//ont joué.
+						this.nbreEssai--;
 					}
-				} while(!gagne);
+				} while(!gagne && this.nbreEssai > 0);
+				//Si un des deux joueurs a gagné ou que l'utilisateur a quitté
+				//ou que le nombre d'essais est dépassé on sort de la boucle 
+				if(this.nbreEssai <= 0 && !gagne) {
+					//Si le nombre d'essais est dépassé et que ni l'utilisateur ni
+					//l'ordinateur n'ont trouvé la combinaison secrète une boîte de dialogue s'affiche
+					jop.showMessageDialog(null, "Nombre d'essais dépassés.", "Fini", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 				
 	}

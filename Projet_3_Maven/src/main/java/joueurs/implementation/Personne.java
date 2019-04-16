@@ -10,7 +10,8 @@ import joueurs.abstractClass.Joueur;
 
 public class Personne extends Joueur {
 
-	//private String combinaison;
+	private int nbreChiffre;
+	private Logger logger = LogManager.getLogger(Personne.class);
 	
 	/**
 	 * Constructeur de Personne
@@ -19,12 +20,15 @@ public class Personne extends Joueur {
 	 * @param combi
 	 * 			la combinaison
 	 */
-	
-	private Logger logger = LogManager.getLogger(Personne.class);
-	
 	public Personne(int n, String combi) {
 		this.n = n;
 		this.combinaison = combi;
+	}
+	
+	public Personne(int n, String combi, int nbreC) {
+		this.n = n;
+		this.combinaison = combi;
+		this.nbreChiffre = nbreC;
 	}
 	
 
@@ -113,7 +117,7 @@ public class Personne extends Joueur {
 		this.afficheCombinaison(combinaison,modeD);
 		
 		do {
-			proposition = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres");
+			proposition = jop.showInputDialog(null, "Veuillez saisir une combinaison de " + n + " chiffres compris entre 0 et " + (this.nbreChiffre-1));
 			//Si l'utilisateur a cliqué sur le bouton annuler de jop
 			//proposition vaut null, on sort de la boucle et arreter vaut true
 			if(proposition == null) {
@@ -131,8 +135,8 @@ public class Personne extends Joueur {
 				//et arreter vaut true
 				continuer = false;
 				arreter = true;
-			} else if(proposition.length() != n || !Jeu.stringComposeChiffres(proposition)) {
-				jop.showMessageDialog(null, "Vous n'avez pas saisi une combinaison de " + n + " chiffres", "Attention", JOptionPane.WARNING_MESSAGE);
+			} else if(proposition.length() != n || !Jeu.stringComposeChiffres(proposition) || !Jeu.verifieComprisEntre(proposition, nbreChiffre)) {
+				jop.showMessageDialog(null, "Vous n'avez pas saisi une combinaison de " + n + " chiffres compris entre 0 et " + (this.nbreChiffre-1), "Attention", JOptionPane.WARNING_MESSAGE);
 				//Si la longueur de la chaîne saisie est différente de n ou
 				//si cette chaîne n'est pas exclusivement composée de chiffres
 				//on affiche un message via une boîte de dialogue et on retourne
