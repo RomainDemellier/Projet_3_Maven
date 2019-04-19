@@ -104,8 +104,6 @@ public class Ordinateur extends Joueur {
 		//On choisit la combinaison à l'indice choixCombinaison dans listeCombinaisons
 		String proposition = this.listeCombinaisons.get(choixCombinaison);
 		
-		//System.out.println("Combinaison choisi : " + combinaisonChoisi);
-		
 		if(proposition.equals(this.combinaison)) {
 			//Si la combinaison choisie est égale à la combinaison secrète
 			//une boîte de dialogue apparaît indiquant que l'ordinateur a trouvé la combinaison

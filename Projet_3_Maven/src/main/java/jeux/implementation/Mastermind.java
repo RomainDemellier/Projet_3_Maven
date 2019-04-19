@@ -66,13 +66,10 @@ public class Mastermind extends Jeu {
 				//Si le mode est défenseur on va créer une ArrayList<String> qui va contenir
 				//toutes les combinaisons possibles avec la méthode toutesLesCombinaisons()
 				ArrayList<String> listeCombinaisons = toutesLesCombinaisons(new ArrayList<String>(),this.nbreCases);
-				System.out.println("Nombre de combinaisons : " + listeCombinaisons.size());
 				//L'utilisateur va pouvoir choisir la combinaison que devra trouver l'ordinateur
 				//avec la méthode chooseCombi
 				String combinaison = this.chooseCombi(this.nbreChiffre);
-				//On génère une proposition avec la méthode genereCombinaison avec un entier
-				//en paramètre qui indique le nombre de chiffres utilisables
-				String proposition = this.genereCombinaison(this.nbreChiffre);
+				//String proposition = this.genereCombinaison(this.nbreChiffre);
 				if(combinaison.charAt(0) != 'Q' && !combinaison.equals("NULL")) {
 					//Si l'utilisateur n'a pas décidé de quitter et que la combinaison != NULL
 					//on instancie un objet de la classe Ordinateur

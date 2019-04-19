@@ -190,7 +190,6 @@ public abstract class Jeu {
 		int n = this.nbreCases;
 		String str = "";
 		Boolean arreter = false;
-		//Boolean continuer = true;
 		JOptionPane jop = new JOptionPane();
 		//Tant que l'utilisateur n'a pas saisi une combinaison de
 		//chiffres de nbreChiffre
@@ -209,8 +208,6 @@ public abstract class Jeu {
 				arreter = true;
 			}
 		} while(!arreter);
-		//System.out.println("str : " + str);
-		//afficheCombinaison(str,'o');
 		return str;
 	}
 	

@@ -78,10 +78,17 @@ public abstract class Joueur {
 		this.resteCombinaison = "";
 		int compteur = 0;
 		
+		//On commence par calculer le nombre de "caractères" bien placés
 		for(int i = 0;i < combinaison.length();i++) {
+			//On parcourt la combinaison secrète
 			if(combinaison.charAt(i) == str.charAt(i)) {
+				//Si combinaison.charAt(i) == str.chatAt(i) str étant la proposition
+				//de l'ordinateur, on incrémente compteur
 				compteur++;
 			} else {
+				//On stocke dans resteProposition et dans resteCombinaison
+				//les autres caractères. Ces deux chaînes nous permettront
+				//de calculer le nombre de caractères présents.
 				this.resteProposition += str.charAt(i);
 				this.resteCombinaison += combinaison.charAt(i);
 			}
@@ -90,6 +97,7 @@ public abstract class Joueur {
 		
 		compteur = 0;
 		
+		//On calcule maintenant le nombre de "caractères" présents
 		//On parcourt restePropo
 		for(int i = 0;i < this.resteProposition.length();i++) {
 			
@@ -97,7 +105,6 @@ public abstract class Joueur {
 			//dans resteCombi
 			int presenceIndex = this.resteCombinaison.indexOf(this.resteProposition.charAt(i));
 			if(presenceIndex != -1) {
-				//System.out.println("Presence à l'index : " + presenceIndex);
 				//Si le caractère est présent on incrémente compteur
 				compteur++;
 				//Puis on retire ce caractère de resteCombi

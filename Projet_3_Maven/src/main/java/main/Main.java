@@ -1,4 +1,4 @@
-package projet_3.main;
+package main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 import jeux.abstractClass.Jeu;
 import jeux.implementation.Mastermind;
 import jeux.implementation.RecherchePlusMoins;
@@ -43,6 +43,7 @@ public class Main {
 			//trouvent dans le fichier config.properties soient le nombre de cases
 			//qu'aura la combinaison, le nombre d'essais et le nombre de chiffres
 			//pour le mastermind (entre 4 et 10)
+			
 			nbreCases = Integer.parseInt(prop.getProperty("jeu.nombreCases"));
 			nbreEssais = Integer.parseInt(prop.getProperty("jeu.nombreEssais"));
 			nbreChiffre = Integer.parseInt(prop.getProperty("mastermind.nombreChiffre"));
@@ -53,7 +54,8 @@ public class Main {
 				modeDeveloppeur = false;
 			}
 
-		} catch (final IOException ex) {
+		} catch (final IOException | NumberFormatException ex) {
+			logger.error(ex.toString());
 			ex.printStackTrace();
 		} finally {
 			if (input != null) {
