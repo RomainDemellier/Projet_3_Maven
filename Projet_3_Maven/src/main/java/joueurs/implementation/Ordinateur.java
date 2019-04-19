@@ -18,6 +18,7 @@ public class Ordinateur extends Joueur {
 	private String proposition = "";
 	private String solution = "";
 	private int nbreChiffre;
+	private int nbreProposition = 1;
 	private ArrayList<String> listeCombinaisons = new ArrayList<String>();
 	private Logger logger = LogManager.getLogger(Ordinateur.class);
 	
@@ -64,6 +65,11 @@ public class Ordinateur extends Joueur {
 		String combi = this.combinaison;
 		String resultat = "";
 		JOptionPane jop = new JOptionPane();
+		
+		if(this.nbreProposition == 1) {
+			System.out.println();
+		}
+		
 		this.afficheCombinaison(combi, modeD);
 		
 		if(proposition.equals(combi)) {
@@ -78,11 +84,13 @@ public class Ordinateur extends Joueur {
 			//à la valeur de la proposition faite par l'ordinateur à l'indice j 
 			resultat = comparaison(this.proposition);
 			//On affiche le résultat dans la console
-			System.out.println("Proposition : " + this.proposition + " -> Réponse : " + resultat + "\n");
+						
+			System.out.println("Proposition " + nbreProposition + " de l'ordinateur : " + this.proposition + " -> Réponse : " + resultat + "\n");
 			logger.info("Proposition : " + this.proposition + " -> Réponse : " + resultat);
 			//On génère une nouvelle proposition découlant de la proposition précédente
 			//et du resultat de la méthode comparaison
 			genereProposition(resultat);
+			nbreProposition++;
 		}
 		return false;
 	}
@@ -97,6 +105,11 @@ public class Ordinateur extends Joueur {
 		Boolean gagne = false;
 		JOptionPane jop = new JOptionPane();
 		String resultat = "";
+		
+		if(this.nbreProposition == 1) {
+			System.out.println();
+		}
+		
 		this.afficheCombinaison(combinaison,modeD);
 		int nombreCombinaisons = this.listeCombinaisons.size();
 		//choixCombinaison est un entier pris au hasard compris entre 0 et nombreCombinaisons - 1
@@ -123,8 +136,11 @@ public class Ordinateur extends Joueur {
 			int nbrePresent = tabResultat[1];
 			resultat = this.resultatMastermind(nbreBienPlace, nbrePresent);
 			//On affiche le résultat (nombre de bien placés, nombre de présents)
-			System.out.println("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat + "\n");
+			
+			System.out.println("Proposition " + nbreProposition +  " de l'ordinateur : " + proposition + " -> Réponse : " + resultat + "\n");
 			logger.info("Proposition de l'ordinateur : " + proposition + " -> Réponse : " + resultat);
+			
+			nbreProposition++;
 			
 			ListIterator li = this.listeCombinaisons.listIterator();
 			while(li.hasNext()) {

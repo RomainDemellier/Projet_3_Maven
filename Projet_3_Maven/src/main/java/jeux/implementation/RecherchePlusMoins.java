@@ -69,8 +69,10 @@ public class RecherchePlusMoins extends Jeu {
 			//choisir la combinaison secrète avec la méthode chooseCombi() et le joueur sera 
 			//l'ordinateur
 			String combinaison = this.chooseCombi();
+			int nbreProposition = 1;
 			if(combinaison.charAt(0) != 'Q' && !combinaison.equals("NULL")) {
 				this.joueur1 = new Ordinateur(nbreCases, combinaison);
+				
 				do {
 					//On appelle la méthode jouerPlusMoins() de la classe Ordinateur.
 					//Elle renvoit true si l'ordinateur a trouvé la combinaison
@@ -82,6 +84,7 @@ public class RecherchePlusMoins extends Jeu {
 					}
 					//A chaque tour on décrémente nbreEssai
 					this.nbreEssai--;
+					nbreProposition++;
 					
 				} while(!gagne && this.nbreEssai > 0);
 				
