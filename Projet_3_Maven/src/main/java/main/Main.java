@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +36,6 @@ public class Main {
 			
 			//On lit le fichier config.properties
 			input = new FileInputStream("src/main/resources/config.properties");
-			
 
 			// load a properties file
 			prop.load(input);
