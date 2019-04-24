@@ -35,8 +35,10 @@ public class Main {
 		try {
 			
 			//On lit le fichier config.properties
-			input = new FileInputStream("src/main/resources/config.properties");
-
+			//input = new FileInputStream("src/main/resources/config.properties");
+			//input = new FileInputStream("classes/config.properties");
+			input = Main.class.getClassLoader().getResourceAsStream("config.properties");
+			
 			// load a properties file
 			prop.load(input);
 			//On affecte aux trois variables ci-dessous les propriétés qui se
